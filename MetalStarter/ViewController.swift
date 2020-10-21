@@ -1,18 +1,17 @@
-//
-//  ViewController.swift
-//  MetalStarter
-//
-//  Created by Denis Konoplev on 10/21/20.
-//
+import MetalKit
+import Metal
 
 import Cocoa
 
 class ViewController: NSViewController {
-
+  var mtkView: MTKView!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    // Do any additional setup after loading the view.
+    guard let metalView = view as? MTKView else {
+     fatalError("metal view not set up in storyboard")
+   }
   }
 
   override var representedObject: Any? {
@@ -20,7 +19,5 @@ class ViewController: NSViewController {
     // Update the view, if already loaded.
     }
   }
-
-
 }
 
