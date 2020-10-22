@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		413B5DF825420EBD00C4C48D /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5DF725420EBD00C4C48D /* Renderer.swift */; };
+		413B5DFB25421B7600C4C48D /* shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 413B5DFA25421B7600C4C48D /* shaders.metal */; };
+		413B5DFE2542212100C4C48D /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5DFD2542212100C4C48D /* MathUtilities.swift */; };
+		413B5E012542265A00C4C48D /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = 413B5E002542265A00C4C48D /* teapot.obj */; };
 		41AFE0972540B64800704850 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFE0962540B64800704850 /* AppDelegate.swift */; };
 		41AFE0992540B64800704850 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFE0982540B64800704850 /* ViewController.swift */; };
 		41AFE09B2540B64900704850 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41AFE09A2540B64900704850 /* Assets.xcassets */; };
@@ -14,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		413B5DF725420EBD00C4C48D /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
+		413B5DFA25421B7600C4C48D /* shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = shaders.metal; sourceTree = "<group>"; };
+		413B5DFD2542212100C4C48D /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
+		413B5E002542265A00C4C48D /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
 		41AFE0932540B64800704850 /* MetalStarter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalStarter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AFE0962540B64800704850 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41AFE0982540B64800704850 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,7 +63,11 @@
 			children = (
 				41AFE0962540B64800704850 /* AppDelegate.swift */,
 				41AFE0982540B64800704850 /* ViewController.swift */,
+				413B5DF725420EBD00C4C48D /* Renderer.swift */,
+				413B5DFD2542212100C4C48D /* MathUtilities.swift */,
+				413B5DFA25421B7600C4C48D /* shaders.metal */,
 				41AFE09A2540B64900704850 /* Assets.xcassets */,
+				413B5E002542265A00C4C48D /* teapot.obj */,
 				41AFE09C2540B64900704850 /* Main.storyboard */,
 				41AFE09F2540B64900704850 /* Info.plist */,
 				41AFE0A02540B64900704850 /* MetalStarter.entitlements */,
@@ -122,6 +134,7 @@
 			files = (
 				41AFE09B2540B64900704850 /* Assets.xcassets in Resources */,
 				41AFE09E2540B64900704850 /* Main.storyboard in Resources */,
+				413B5E012542265A00C4C48D /* teapot.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -132,8 +145,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413B5DFB25421B7600C4C48D /* shaders.metal in Sources */,
 				41AFE0992540B64800704850 /* ViewController.swift in Sources */,
+				413B5DF825420EBD00C4C48D /* Renderer.swift in Sources */,
 				41AFE0972540B64800704850 /* AppDelegate.swift in Sources */,
+				413B5DFE2542212100C4C48D /* MathUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
