@@ -11,6 +11,11 @@
 		413B5DFB25421B7600C4C48D /* shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 413B5DFA25421B7600C4C48D /* shaders.metal */; };
 		413B5DFE2542212100C4C48D /* MathUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5DFD2542212100C4C48D /* MathUtilities.swift */; };
 		413B5E012542265A00C4C48D /* teapot.obj in Resources */ = {isa = PBXBuildFile; fileRef = 413B5E002542265A00C4C48D /* teapot.obj */; };
+		413B5E0C25435D9800C4C48D /* bob.obj in Resources */ = {isa = PBXBuildFile; fileRef = 413B5E0925435D9800C4C48D /* bob.obj */; };
+		413B5E0D25435D9800C4C48D /* blub.obj in Resources */ = {isa = PBXBuildFile; fileRef = 413B5E0A25435D9800C4C48D /* blub.obj */; };
+		413B5E1125435DAB00C4C48D /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5E1025435DAB00C4C48D /* Scene.swift */; };
+		413B5E152543651300C4C48D /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5E142543651200C4C48D /* Camera.swift */; };
+		413B5E1C254398B300C4C48D /* ViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413B5E1B254398B300C4C48D /* ViewControllerExtension.swift */; };
 		41AFE0972540B64800704850 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFE0962540B64800704850 /* AppDelegate.swift */; };
 		41AFE0992540B64800704850 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AFE0982540B64800704850 /* ViewController.swift */; };
 		41AFE09B2540B64900704850 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 41AFE09A2540B64900704850 /* Assets.xcassets */; };
@@ -22,6 +27,11 @@
 		413B5DFA25421B7600C4C48D /* shaders.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = shaders.metal; sourceTree = "<group>"; };
 		413B5DFD2542212100C4C48D /* MathUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MathUtilities.swift; sourceTree = "<group>"; };
 		413B5E002542265A00C4C48D /* teapot.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = teapot.obj; sourceTree = "<group>"; };
+		413B5E0925435D9800C4C48D /* bob.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bob.obj; path = "../../modern-metal/modern-metal/modern-metal/bob.obj"; sourceTree = "<group>"; };
+		413B5E0A25435D9800C4C48D /* blub.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = blub.obj; path = "../../modern-metal/modern-metal/modern-metal/blub.obj"; sourceTree = "<group>"; };
+		413B5E1025435DAB00C4C48D /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Scene.swift; path = "../../modern-metal/modern-metal/modern-metal/Scene.swift"; sourceTree = "<group>"; };
+		413B5E142543651200C4C48D /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
+		413B5E1B254398B300C4C48D /* ViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtension.swift; sourceTree = "<group>"; };
 		41AFE0932540B64800704850 /* MetalStarter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MetalStarter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41AFE0962540B64800704850 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		41AFE0982540B64800704850 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,10 +73,15 @@
 			children = (
 				41AFE0962540B64800704850 /* AppDelegate.swift */,
 				41AFE0982540B64800704850 /* ViewController.swift */,
+				413B5E1B254398B300C4C48D /* ViewControllerExtension.swift */,
+				413B5E142543651200C4C48D /* Camera.swift */,
 				413B5DF725420EBD00C4C48D /* Renderer.swift */,
 				413B5DFD2542212100C4C48D /* MathUtilities.swift */,
+				413B5E1025435DAB00C4C48D /* Scene.swift */,
 				413B5DFA25421B7600C4C48D /* shaders.metal */,
 				41AFE09A2540B64900704850 /* Assets.xcassets */,
+				413B5E0A25435D9800C4C48D /* blub.obj */,
+				413B5E0925435D9800C4C48D /* bob.obj */,
 				413B5E002542265A00C4C48D /* teapot.obj */,
 				41AFE09C2540B64900704850 /* Main.storyboard */,
 				41AFE09F2540B64900704850 /* Info.plist */,
@@ -102,7 +117,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1200;
-				LastUpgradeCheck = 1200;
+				LastUpgradeCheck = 1210;
 				TargetAttributes = {
 					41AFE0922540B64800704850 = {
 						CreatedOnToolsVersion = 12.0.1;
@@ -132,9 +147,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				413B5E0D25435D9800C4C48D /* blub.obj in Resources */,
 				41AFE09B2540B64900704850 /* Assets.xcassets in Resources */,
 				41AFE09E2540B64900704850 /* Main.storyboard in Resources */,
 				413B5E012542265A00C4C48D /* teapot.obj in Resources */,
+				413B5E0C25435D9800C4C48D /* bob.obj in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,7 +165,10 @@
 				413B5DFB25421B7600C4C48D /* shaders.metal in Sources */,
 				41AFE0992540B64800704850 /* ViewController.swift in Sources */,
 				413B5DF825420EBD00C4C48D /* Renderer.swift in Sources */,
+				413B5E1125435DAB00C4C48D /* Scene.swift in Sources */,
+				413B5E1C254398B300C4C48D /* ViewControllerExtension.swift in Sources */,
 				41AFE0972540B64800704850 /* AppDelegate.swift in Sources */,
+				413B5E152543651300C4C48D /* Camera.swift in Sources */,
 				413B5DFE2542212100C4C48D /* MathUtilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,6 +308,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MetalStarter/MetalStarter.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MetalStarter/Info.plist;
@@ -307,6 +328,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MetalStarter/MetalStarter.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MetalStarter/Info.plist;

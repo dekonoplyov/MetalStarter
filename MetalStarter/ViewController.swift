@@ -18,10 +18,19 @@ class ViewController: NSViewController {
       fatalError("GPU not available")
     }
     mtkView.device = device
-    mtkView.colorPixelFormat = .bgra8Unorm
+    mtkView.colorPixelFormat = .bgra8Unorm_srgb
+    mtkView.depthStencilPixelFormat = .depth32Float
     
     renderer = Renderer(view: mtkView, device: device)
     mtkView.delegate = renderer
+    addGestureRecognizers(to: mtkView)
+    NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+      if self.myKeyDown(with: $0) {
+          return nil
+       } else {
+          return $0
+       }
+    }
   }
 
   override var representedObject: Any? {
