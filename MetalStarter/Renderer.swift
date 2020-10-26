@@ -17,6 +17,7 @@ struct FragmentUniforms {
   var light0 = Light()
   var light1 = Light()
   var light2 = Light()
+  var tiling: UInt32 = 1
 }
 
 class Renderer: NSObject, MTKViewDelegate {
@@ -60,6 +61,24 @@ class Renderer: NSObject, MTKViewDelegate {
     let light2 = Light(worldPosition: float3( 0, -5, 0), color: float3(0, 0, 1))
     scene.lights = [ light0, light1, light2 ]
 
+    let ground = Node(name: "Ground")
+    let groundMaterial = Material()
+    let groundBaseColorTexture = try! textureLoader.newTexture(name: "ground",
+                                                              scaleFactor: 1.0,
+                                                              bundle: nil,
+                                                              options: options)
+    groundMaterial.baseColorTexture = groundBaseColorTexture
+    groundMaterial.specularPower = 40
+    groundMaterial.specularColor = float3(0.8, 0.8, 0.8)
+    ground.material = groundMaterial
+    ground.tiling = 16
+    
+    let groundURL = Bundle.main.url(forResource: "plane", withExtension: "obj")!
+    let groundAsset = MDLAsset(url: groundURL, vertexDescriptor: vertexDescriptor, bufferAllocator: bufferAllocator)
+    ground.mesh = try! MTKMesh.newMeshes(asset: groundAsset, device: device).metalKitMeshes.first!
+
+    scene.rootNode.children.append(ground)
+    
     let bob = Node(name: "Bob")
     let bobMaterial = Material()
     let bobBaseColorTexture = try? textureLoader.newTexture(name: "bob_baseColor",
@@ -76,26 +95,6 @@ class Renderer: NSObject, MTKViewDelegate {
     bob.mesh = try! MTKMesh.newMeshes(asset: bobAsset, device: device).metalKitMeshes.first!
 
     scene.rootNode.children.append(bob)
-
-    let blubMaterial = Material()
-    let blubBaseColorTexture = try? textureLoader.newTexture(name: "blub_baseColor",
-                                                             scaleFactor: 1.0,
-                                                             bundle: nil,
-                                                             options: options)
-    blubMaterial.baseColorTexture = blubBaseColorTexture
-    blubMaterial.specularPower = 40
-    blubMaterial.specularColor = float3(0.8, 0.8, 0.8)
-    
-    let blubURL = Bundle.main.url(forResource: "blub", withExtension: "obj")!
-    let blubAsset = MDLAsset(url: blubURL, vertexDescriptor: vertexDescriptor, bufferAllocator: bufferAllocator)
-    let blubMesh = try! MTKMesh.newMeshes(asset: blubAsset, device: device).metalKitMeshes.first!
-
-    for i in 1...fishCount {
-      let blub = Node(name: "Blub \(i)")
-      blub.material = blubMaterial
-      blub.mesh = blubMesh
-      bob.children.append(blub)
-    }
     
     return scene
   }
@@ -124,6 +123,8 @@ class Renderer: NSObject, MTKViewDelegate {
     samplerDescriptor.minFilter = .linear
     samplerDescriptor.magFilter = .linear
     samplerDescriptor.mipFilter = .linear
+    samplerDescriptor.sAddressMode = .repeat
+    samplerDescriptor.tAddressMode = .repeat
     return device.makeSamplerState(descriptor: samplerDescriptor)!
   }
   
@@ -163,31 +164,15 @@ class Renderer: NSObject, MTKViewDelegate {
   func update(_ view: MTKView) {
     time += 1 / Float(view.preferredFramesPerSecond)
     
-    let angle = Float(0.0)
-    scene.rootNode.modelMatrix = float4x4(rotationAbout: float3(0, 1, 0), by: angle)
+    let angle = time
+    scene.rootNode.modelMatrix = float4x4(rotationAbout: float3(0, 1, 0), by: angle / 2)
     
     if let bob = scene.nodeNamed("Bob") {
-      bob.modelMatrix = float4x4(translationBy: float3(0, 0.015 * sin(time * 5), 0))
+      bob.modelMatrix = float4x4(translationBy: float3(0, 0.1 + 0.015 * sin(time * 5), 0))
     }
     
-    let blubBaseTransform = float4x4(rotationAbout: float3(0, 0, 1), by: -.pi / 2) *
-                            float4x4(scaleBy: 0.25) *
-                            float4x4(rotationAbout: float3(0, 1, 0), by: -.pi / 2)
-    
-    let fishCount = Renderer.fishCount
-    for i in 1...fishCount {
-      if let blub = scene.nodeNamed("Blub \(i)") {
-        let pivotPosition = float3(0.4, 0, 0)
-        let rotationOffset = float3(0.4, 0, 0)
-        let rotationSpeed = Float(0.3)
-        let rotationAngle = 2 * Float.pi * Float(rotationSpeed * time) + (2 * Float.pi / Float(fishCount) * Float(i - 1))
-        let horizontalAngle = 2 * .pi / Float(fishCount) * Float(i - 1)
-        blub.modelMatrix = float4x4(rotationAbout: float3(0, 1, 0), by: horizontalAngle) *
-                           float4x4(translationBy: rotationOffset) *
-                           float4x4(rotationAbout: float3(0, 0, 1), by: rotationAngle) *
-                           float4x4(translationBy: pivotPosition) *
-                           blubBaseTransform
-      }
+    if let ground = scene.nodeNamed("Ground") {
+      ground.modelMatrix = float4x4(scaleBy: 16)
     }
   }
   
@@ -228,7 +213,7 @@ class Renderer: NSObject, MTKViewDelegate {
       var vertexUniforms = VertexUniforms(viewProjectionMatrix: viewProjectionMatrix,
                                           modelMatrix: modelMatrix,
                                           normalMatrix: modelMatrix.normalMatrix)
-      commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<VertexUniforms>.size, index: 1)
+      commandEncoder.setVertexBytes(&vertexUniforms, length: MemoryLayout<VertexUniforms>.stride, index: 1)
       
       var fragmentUniforms = FragmentUniforms(cameraWorldPosition: camera.position,
                                               ambientLightColor: scene.ambientLightColor,
@@ -236,8 +221,9 @@ class Renderer: NSObject, MTKViewDelegate {
                                               specularPower: node.material.specularPower,
                                               light0: scene.lights[0],
                                               light1: scene.lights[1],
-                                              light2: scene.lights[2])
-      commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.size, index: 0)
+                                              light2: scene.lights[2],
+                                              tiling: node.tiling)
+      commandEncoder.setFragmentBytes(&fragmentUniforms, length: MemoryLayout<FragmentUniforms>.stride, index: 0)
 
       commandEncoder.setFragmentTexture(baseColorTexture, index: 0)
 

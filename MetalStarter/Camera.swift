@@ -7,7 +7,7 @@ class Camera {
   let nearZ: Float = 0.1
   let farZ: Float = 100
   
-  var position: float3 = [0, 0, 3]
+  var position: float3 = [0, 0.5, 3]
   var front: float3 = [0, 0, 1]
   var up: float3 = [0, 1, 0]
   
